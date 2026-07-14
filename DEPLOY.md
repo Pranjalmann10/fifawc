@@ -1,62 +1,58 @@
 # Deployment Guide
 
-Stack: **Supabase (Postgres)** already live &rarr; **Render** (Node/Express API) &rarr; **Vercel** (React frontend).
+**Live URLs (already deployed):**
+- Frontend: https://fifawc-ten.vercel.app
+- API: https://fifawc-api.vercel.app/api (health check: `/api/health`)
+
+Stack: **Supabase** (Postgres) &rarr; **Vercel serverless function** (Node/Express API) &rarr; **Vercel** (React frontend, static).
+Both the API and frontend are separate Vercel projects (`fifawc-api` and `fifawc`) in the
+`pranjalmann10s-projects` scope, both deployed from this same repo via the Vercel CLI.
 
 ## 1. Database — Supabase (done)
 
-The schema, views, and seed data are already loaded into your Supabase project via
-`etl/load.py`. To reload/refresh at any time:
+Schema, views, and seed data are loaded into Supabase via `etl/load.py`. To reload/refresh:
 
 ```bash
 .venv/Scripts/python etl/load.py
 ```
 
-Your Supabase project's Postgres connection string lives in the repo-root `.env`
-(gitignored, never committed). If you rotate the DB password, update it there.
+The Supabase connection string lives in the repo-root `.env` (gitignored, never committed).
 
-## 2. Backend API — Render
+## 2. Backend API — Vercel serverless (done)
 
-1. Push this repo to GitHub (see step 0 below if not done yet).
-2. Go to [render.com](https://render.com) &rarr; sign up/log in &rarr; **New +** &rarr; **Web Service**.
-3. Connect your GitHub repo.
-4. Configure:
-   - **Root directory:** `backend`
-   - **Build command:** `npm install`
-   - **Start command:** `npm start`
-   - **Instance type:** Free
-5. Add environment variables (Render dashboard &rarr; Environment):
-   - `DATABASE_URL` — the same Supabase connection string from your local `.env`
-   - `PORT` — `4000` (Render overrides this with its own `PORT` env var automatically; the app already reads `process.env.PORT`)
-6. Deploy. Note the public URL Render gives you, e.g. `https://fifawc-api.onrender.com`.
-7. Verify: `curl https://fifawc-api.onrender.com/api/health` should return `{"status":"ok","db":"connected"}`.
-
-Free-tier Render services spin down after inactivity and take ~30-60s to wake on
-the first request — fine for a portfolio demo, mention it if timing matters in an interview.
-
-## 3. Frontend — Vercel
-
-1. Go to [vercel.com](https://vercel.com) &rarr; **Add New** &rarr; **Project** &rarr; import the same GitHub repo.
-2. Configure:
-   - **Root directory:** `frontend`
-   - **Framework preset:** Vite
-   - **Build command:** `npm run build` (default)
-   - **Output directory:** `dist` (default)
-3. Add environment variable:
-   - `VITE_API_URL` = `https://fifawc-api.onrender.com/api` (your Render URL from step 2, with `/api` suffix)
-4. Deploy. Vercel gives you a public URL, e.g. `https://fifawc.vercel.app` — that's your live, shareable link.
-
-## 0. Push to GitHub (if not already)
+The Express app (`backend/src/app.js`) is wrapped as a single serverless function
+(`backend/api/index.js`), with `backend/vercel.json` rewriting all paths to it so
+Express's own router (`/api/tournaments`, `/api/matches`, etc.) still works unmodified.
 
 ```bash
-git add -A
-git commit -m "Initial commit: FIFA World Cup analytics dashboard"
-git branch -M main
-git remote add origin https://github.com/<your-username>/fifawc.git
-git push -u origin main
+cd backend
+vercel link --yes --project fifawc-api      # one-time
+vercel env add DATABASE_URL production      # paste the Supabase connection string
+vercel --prod                               # deploy
+```
+
+## 3. Frontend — Vercel (done)
+
+```bash
+cd frontend
+vercel link --yes --project fifawc          # one-time
+vercel env add VITE_API_URL production      # https://fifawc-api.vercel.app/api
+vercel --prod                               # deploy
 ```
 
 ## Updating after changes
 
 - **Schema/data changes:** edit `db/schema.sql`, `db/views.sql`, or `db/seed/*.csv`, then rerun
   `python etl/load.py` locally against the Supabase `DATABASE_URL`.
-- **Backend/frontend changes:** push to GitHub — both Render and Vercel auto-deploy on push to `main`.
+- **Backend changes:** `cd backend && vercel --prod`
+- **Frontend changes:** `cd frontend && vercel --prod`
+- Both projects can also be connected to GitHub (Vercel dashboard &rarr; project &rarr; Settings &rarr;
+  Git) to get automatic deploys on every push to `master` instead of running `vercel --prod` by hand.
+
+## Alternative: Render instead of Vercel for the API
+
+If you'd rather run the API as a normal long-lived Node server (e.g. to avoid
+serverless cold starts), `backend/src/index.js` is still a standard Express
+entrypoint (`npm start`) that works unchanged on Render, Railway, Fly.io, etc.
+Point `DATABASE_URL` at the same Supabase instance and set `VITE_API_URL` on
+the frontend to wherever that host serves `/api`.

@@ -8,7 +8,7 @@
 
 > **Stack update (2026-07-14):** the BI layer shipped as a custom React
 > dashboard (Node/Express API over PostgreSQL) instead of Power BI, and the
-> whole stack is deployed live (Supabase + Render + Vercel) rather than
+> whole stack is deployed live (Supabase + Vercel) rather than
 > staying a local desktop artifact. Rationale: a live, shareable link is more
 > resume/interview-friendly than a Power BI file that requires the reviewer
 > to have Power BI Desktop installed, and it demonstrates full-stack skills
@@ -56,7 +56,7 @@ Football fans, analysts, and fantasy-league players lack a single, well-structur
 | Data Processing / ETL | Python (pandas, psycopg2/SQLAlchemy) |
 | API | Node.js + Express (REST) |
 | Visualization | React (Vite) + Recharts, deployed on Vercel |
-| Hosting | Supabase (DB) + Render (API) + Vercel (frontend) |
+| Hosting | Supabase (DB) + Vercel (serverless API + frontend) |
 | Version Control | Git/GitHub |
 | Data Sources | Public FIFA/World Cup historical results (2002-2022), compiled from training knowledge and documented in `README.md` |
 
@@ -79,7 +79,7 @@ Football fans, analysts, and fantasy-league players lack a single, well-structur
      standings, head-to-head, top scorers
           |
           v
-[ Node/Express REST API (Render) ]
+[ Node/Express REST API (Vercel serverless function) ]
    - Parameterized queries over the
      analytical views
           |
@@ -111,7 +111,7 @@ Football fans, analysts, and fantasy-league players lack a single, well-structur
 - Expanded dashboard views: top scorers leaderboard, group-stage standings, team form trends (rolling 5-match window)
 - Advanced SQL: window functions for rolling form (`team_rolling_form`), CTEs for group standings and tournament progression
 - Dashboard filters: confederation, tournament year, stage, team search; dedicated head-to-head page
-- Live deployment: Supabase (DB) + Render (API) + Vercel (frontend) — see `DEPLOY.md`
+- Live deployment: Supabase (DB) + Vercel (serverless API + frontend) — see `DEPLOY.md`
 
 ### Phase 2.5 — Follow-up (not yet done)
 - Group-stage match-by-match data for 2002/2006/2010/2014 (currently knockout-stage only for those years; schema/ETL already support it)
@@ -134,12 +134,12 @@ Football fans, analysts, and fantasy-league players lack a single, well-structur
 | Risk | Mitigation |
 |---|---|
 | Inconsistent historical data across sources | Standardize via ETL validation layer, manual reconciliation for edge cases |
-| Free-tier hosting cold starts/limits (Render/Supabase) | Acceptable for a portfolio demo; core value stays in the portable PostgreSQL + SQL layer regardless of host |
+| Free-tier hosting cold starts/limits (Vercel/Supabase) | Acceptable for a portfolio demo; core value stays in the portable PostgreSQL + SQL layer regardless of host |
 | Scope creep into ML territory | Keep prediction work in the separate ML ensemble project |
 
 ## 12. Resume-Ready Summary
 
-> **FIFA World Cup 2026 Analytics Dashboard** — Designed and built a normalized PostgreSQL data model for historical World Cup data (2002&ndash;2022); developed Python ETL pipelines for ingestion, validation, and loading; wrote advanced SQL (window functions, CTEs) for rolling team form, group standings, and head-to-head analytics; built a Node/Express REST API and a live React dashboard surfacing team performance, top scorers, standings, and head-to-head trends — deployed end-to-end on Supabase, Render, and Vercel, demonstrating the full data analyst + full-stack workflow from raw data to a shareable, production-hosted product.
+> **FIFA World Cup 2026 Analytics Dashboard** — Designed and built a normalized PostgreSQL data model for historical World Cup data (2002&ndash;2022); developed Python ETL pipelines for ingestion, validation, and loading; wrote advanced SQL (window functions, CTEs) for rolling team form, group standings, and head-to-head analytics; built a Node/Express REST API and a live React dashboard surfacing team performance, top scorers, standings, and head-to-head trends — deployed end-to-end on Supabase and Vercel, demonstrating the full data analyst + full-stack workflow from raw data to a shareable, production-hosted product.
 
 ---
 

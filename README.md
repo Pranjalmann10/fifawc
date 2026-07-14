@@ -5,6 +5,8 @@ World Cup history (2002&ndash;2022), a Python ETL pipeline, a SQL layer with
 window-function/CTE-based analytics, a Node/Express REST API, and a React
 dashboard for exploring it all.
 
+**Live:** [fifawc-ten.vercel.app](https://fifawc-ten.vercel.app) &middot; API: [fifawc-api.vercel.app/api/health](https://fifawc-api.vercel.app/api/health)
+
 See [`prd.md`](prd.md) for the full product requirements.
 
 ## Stack
@@ -15,7 +17,7 @@ See [`prd.md`](prd.md) for the full product requirements.
 | ETL | Python (pandas, SQLAlchemy, psycopg2) |
 | API | Node.js + Express |
 | Frontend | React (Vite) + Recharts |
-| Hosting | Supabase (DB) + Render (API) + Vercel (frontend) |
+| Hosting | Supabase (DB) + Vercel (serverless API + frontend) |
 
 ## Project layout
 
@@ -84,4 +86,4 @@ npm run dev       # http://localhost:5173
 ## Deployment
 
 See [`DEPLOY.md`](DEPLOY.md) for the full guide to going live on
-Supabase + Render + Vercel.
+Supabase + Vercel.
