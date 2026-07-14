@@ -1,0 +1,26 @@
+year,player_name,team,goals,is_golden_boot
+2002,Ronaldo,Brazil,8,TRUE
+2002,Rivaldo,Brazil,5,FALSE
+2002,Miroslav Klose,Germany,5,FALSE
+2002,Christian Vieri,Italy,4,FALSE
+2002,Pauleta,Portugal,4,FALSE
+2006,Miroslav Klose,Germany,5,TRUE
+2006,Ronaldo,Brazil,3,FALSE
+2006,Hernan Crespo,Argentina,2,FALSE
+2010,Thomas Muller,Germany,5,TRUE
+2010,David Villa,Spain,5,FALSE
+2010,Wesley Sneijder,Netherlands,5,FALSE
+2010,Diego Forlan,Uruguay,5,FALSE
+2014,James Rodriguez,Colombia,6,TRUE
+2014,Thomas Muller,Germany,5,FALSE
+2014,Neymar,Brazil,4,FALSE
+2014,Lionel Messi,Argentina,4,FALSE
+2018,Harry Kane,England,6,TRUE
+2018,Romelu Lukaku,Belgium,4,FALSE
+2018,Antoine Griezmann,France,4,FALSE
+2018,Cristiano Ronaldo,Portugal,4,FALSE
+2018,Kylian Mbappe,France,4,FALSE
+2022,Kylian Mbappe,France,8,TRUE
+2022,Lionel Messi,Argentina,7,FALSE
+2022,Julian Alvarez,Argentina,4,FALSE
+2022,Olivier Giroud,France,4,FALSE
