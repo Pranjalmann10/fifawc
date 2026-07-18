@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useApi } from "../useApi.js";
 import { api } from "../api.js";
+import TeamBadge from "../TeamBadge.jsx";
 
 export default function HeadToHead() {
   const { data: teams } = useApi(() => api.teams(), []);
@@ -49,9 +50,9 @@ export default function HeadToHead() {
                 <tr key={m.match_id}>
                   <td>{m.tournament_year}</td>
                   <td>{m.stage}</td>
-                  <td className="team-cell">{m.home_team}</td>
+                  <td className="team-cell"><TeamBadge name={m.home_team} />{m.home_team}</td>
                   <td className="score-cell">{m.home_score}&ndash;{m.away_score}</td>
-                  <td className="team-cell">{m.away_team}</td>
+                  <td className="team-cell"><TeamBadge name={m.away_team} />{m.away_team}</td>
                 </tr>
               ))}
             </tbody>

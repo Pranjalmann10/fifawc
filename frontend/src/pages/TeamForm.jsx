@@ -29,15 +29,26 @@ export default function TeamForm() {
 
       {form && form.length > 0 && (
         <>
+          <div className="h2h-summary">
+            <div className="stat-card" style={{ flex: 1 }}>
+              <span className="stat-value">{form[form.length - 1].points_last_5}</span>
+              <span className="stat-label">Points (last 5)</span>
+            </div>
+            <div className="stat-card" style={{ flex: 1 }}>
+              <span className="stat-value">{form[form.length - 1].avg_goals_for_last_5}</span>
+              <span className="stat-label">Avg goals for (last 5)</span>
+            </div>
+          </div>
+
           <div className="chart-card">
             <ResponsiveContainer width="100%" height={280}>
               <LineChart data={form}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2a2f3a" />
-                <XAxis dataKey="match_seq" stroke="#9aa4b2" label={{ value: "Match #", position: "insideBottom", offset: -5, fill: "#9aa4b2" }} />
-                <YAxis stroke="#9aa4b2" />
-                <Tooltip contentStyle={{ background: "#1a1e27", border: "1px solid #2a2f3a" }} />
-                <Line type="monotone" dataKey="points_last_5" stroke="#4fd1c5" strokeWidth={2} name="Points (last 5)" dot />
-                <Line type="monotone" dataKey="avg_goals_for_last_5" stroke="#f6ad55" strokeWidth={2} name="Avg goals for (last 5)" dot />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                <XAxis dataKey="match_seq" stroke="var(--text-dim)" label={{ value: "Match #", position: "insideBottom", offset: -5, fill: "var(--text-dim)" }} />
+                <YAxis stroke="var(--text-dim)" />
+                <Tooltip contentStyle={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 8 }} />
+                <Line type="monotone" dataKey="points_last_5" stroke="#2e7d32" strokeWidth={2} name="Points (last 5)" dot />
+                <Line type="monotone" dataKey="avg_goals_for_last_5" stroke="#ffd700" strokeWidth={2} name="Avg goals for (last 5)" dot />
               </LineChart>
             </ResponsiveContainer>
           </div>

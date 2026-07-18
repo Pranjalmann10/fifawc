@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useApi } from "../useApi.js";
 import { api } from "../api.js";
+import TeamBadge from "../TeamBadge.jsx";
 
 const YEARS = [2018, 2022]; // full group-stage data available for these tournaments
 
@@ -40,7 +41,10 @@ export default function Standings() {
               <tbody>
                 {rows.map((r) => (
                   <tr key={r.team_name} className={r.group_rank <= 2 ? "advances" : ""}>
-                    <td>{r.team_name}</td>
+                    <td style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <TeamBadge name={r.team_name} size={18} />
+                      {r.team_name}
+                    </td>
                     <td>{r.played}</td>
                     <td>{r.won}</td>
                     <td>{r.drawn}</td>

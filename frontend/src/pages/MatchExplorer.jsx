@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useApi } from "../useApi.js";
 import { api } from "../api.js";
+import TeamBadge from "../TeamBadge.jsx";
 
 const YEARS = [2002, 2006, 2010, 2014, 2018, 2022];
 const STAGES = ["Group", "Round of 16", "Quarter-final", "Semi-final", "Third place", "Final"];
@@ -56,12 +57,12 @@ export default function MatchExplorer() {
                 <tr key={m.match_id}>
                   <td>{m.tournament_year}</td>
                   <td>{m.group_name ? `Group ${m.group_name}` : m.stage}</td>
-                  <td className="team-cell">{m.home_team}</td>
+                  <td className="team-cell"><TeamBadge name={m.home_team} />{m.home_team}</td>
                   <td className="score-cell">
                     {m.home_score}&ndash;{m.away_score}
                     {m.went_to_penalties ? ` (pens ${m.home_penalties}-${m.away_penalties})` : m.went_to_extra_time ? " (aet)" : ""}
                   </td>
-                  <td className="team-cell">{m.away_team}</td>
+                  <td className="team-cell"><TeamBadge name={m.away_team} />{m.away_team}</td>
                   <td className="muted">{m.venue || "—"}</td>
                 </tr>
               ))}

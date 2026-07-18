@@ -26,11 +26,15 @@ export default function Overview() {
       <div className="grid">
         {tournaments.map((t) => (
           <div className="card" key={t.tournament_id}>
-            <h3>{t.year}</h3>
-            <p className="muted">{t.host_country}</p>
+            <h3>
+              {t.year}
+              <span className="muted" style={{ textTransform: "none", letterSpacing: 0, fontWeight: 500 }}>
+                {t.host_country}
+              </span>
+            </h3>
             {t.winner ? (
               <>
-                <p><strong>Winner:</strong> {t.winner}</p>
+                <p className="winner-line">🏆 {t.winner}</p>
                 <p><strong>Runner-up:</strong> {t.runner_up}</p>
                 <p><strong>Golden Boot:</strong> {t.golden_boot_player} ({t.golden_boot_goals})</p>
               </>
